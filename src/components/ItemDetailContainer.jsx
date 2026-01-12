@@ -1,17 +1,24 @@
 import { useParams } from "react-router";
 import ItemCount from "./ItemCount";
+import products from "../data/products";
+import { useEffect,useState } from "react";
+import { getItemData } from "../data/mockService";
 
 function ItemDetailContainer() {
-    const parametrosURL = useParams();
-    console.log("Parámetros de la URL:", parametrosURL);
+  const {itemTITLE}=useParams
+  const [products, setProducts] = useState({});  
+
+  useEffect(() => {
+    getItemData(itemTITLE).then((respuesta) => setProducts(respuesta));
+  }, [itemTITLE]);
 
   return (
     <section>
-      <h2>Detalle del Item</h2>
+      <h2>{products.title}</h2>
       <hr />
-      <img src="/" alt="Imagen" />
-      <p>Descripcion</p>
-      <h4>Precio: $450.000</h4>
+      <img src={products.img} alt="Imagen" />
+      <p>{products.description}</p>
+      <h4>{products.price}</h4>
       <ItemCount/>
     </section>
   );

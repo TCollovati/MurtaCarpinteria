@@ -14,4 +14,12 @@ function getData(){
     return promiseData
 }
 
+    export  function getItemData(itemTITLE){
+      const promiseData= new Promise((resolve, reject) =>{
+        const itemRequested = products.find( (item) => item.title === itemTITLE)
+        setTimeout(() =>resolve(itemRequested),1000)
+    })
+    return promiseData
+    }
+
 export default getData;

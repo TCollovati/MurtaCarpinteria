@@ -2,20 +2,17 @@
 import Item from "./Item.jsx"
 import getData from "../data/mockService.js"
 import {useEffect, useState} from "react"
+import products from "../data/products.js"
 
 export default function ItemListContainer({ Title}) {
 
 const [products, setProducts] = useState([])
 
-    useEffect( () => {
-        getData().then((respuesta) => {
-        console.log("Promesa terminada")
-        setProducts(respuesta)
-    }).catch( (error) => {
-        alert(error)
-    })
-    }, [] ) 
-
+    async function fetchProducts() {
+    }
+    useEffect(() => {
+        getData().then(respuesta=> setProducts(respuesta))
+    },[])
 
     return (
         <section>
