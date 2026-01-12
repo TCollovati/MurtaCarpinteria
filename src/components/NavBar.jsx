@@ -1,18 +1,25 @@
-import { NavLink } from "react-router";
+import { NavLink } from "react-router"
+import logo from "../img/Logo.jpg"
+import CartW from "./CartW.jsx"
 
-export default function NavBar() {
+export default function NavBar(){
+
+
   return (
     <nav>
-      <h2>Club96</h2>
-    <li>
-      <NavLink to="/category/jueguetes">JUEGUETES</NavLink>
-    </li>
-    <li>
-      <NavLink to="/category/muebles" >MUEBLES</NavLink>
-    </li>
-    <li>
-      <NavLink to="/category/decoracion" >DECORACION</NavLink>
-    </li>
+      <NavLink to="/">
+        <img width="350px"src={logo} alt="Logo de Murta" />
+      </NavLink>
+      <li>
+        <NavLink to="/category/Jueguetes">Jueguetes</NavLink>
+      </li>
+      <li>
+        <NavLink to="/category/Adornos">Adornos</NavLink>
+      </li>
+      <li>
+        <NavLink to="/category/Muebles">Muebles</NavLink>
+      </li>
+      <CartW/>
     </nav>
-  );
+  )
 }

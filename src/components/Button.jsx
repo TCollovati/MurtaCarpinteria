@@ -5,7 +5,7 @@ export default function Button(props){
 
     function handleChangeColor(){
         console.log("Cambiando color")
-        setColorFondo("#ff0000ff");
+        setColorFondo("rgb(129, 19, 197)");
     }
         return(
         <button onClick={handleChangeColor} 

@@ -1,30 +1,32 @@
+
+
 import './App.css'
-import NavBar from './components/NavBar.jsx'
-import ItemListContainer from './components/ItemListContainer.jsx'
-import ItemDetailContainer from './components/ItemDetailContainer.jsx'
-import { BrowserRouter, Routes, Route, Link } from 'react-router'
+import ItemDetailContainer from './components/ItemDetailContainer';
+import ItemListContainer from './components/ItemListContainer';
+import NavBar from './components/NavBar';
+import { BrowserRouter, Routes, Route, Link } from 'react-router';
 
-function App() {
-  return (
+function App() {    
+  return (   
     <BrowserRouter>
-      <NavBar />
+      <NavBar/>
 
-      <Routes>
-        <Route path="/" element={<ItemListContainer />} />
+      <Routes> 
+        <Route path="/" element={<ItemListContainer/>}
+        /> 
 
-        <Route path="/products/:itemTITLE" element={<ItemDetailContainer />} />
-        <Route path="/aboutus" element={<h1>Sobre Nosotros</h1>} />
-
-        <Route
-          path="*"
-          element={
-            <div>
-              <h1>404: Page not found</h1>
-              <Link to="/">Regresar al home</Link>
+        <Route path="/category/:categoryID" element={<ItemListContainer/>} />
+        <Route path="/product/:itemID" element={ <ItemDetailContainer/> } />
+      
+        <Route path="*"  element={ <div>          
+          <h1>404: Page not found</h1>
+          <Link to="/">Regresar al home</Link>
+          {/* <a href="/"> */}
             </div>
-          }
-        />
+          }  
+          />
       </Routes>
+
     </BrowserRouter>
   )
 }

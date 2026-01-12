@@ -1,27 +1,32 @@
-import { useParams } from "react-router";
-import ItemCount from "./ItemCount";
-import products from "../data/products";
-import { useEffect,useState } from "react";
-import { getItemData } from "../data/mockService";
+import { useParams } from 'react-router'
+import ItemCount from './ItemCount'
+import { useEffect, useState } from 'react';
+import { getItemData } from '../data/mockService';
 
-function ItemDetailContainer() {
-  const {itemTITLE}=useParams
-  const [products, setProducts] = useState({});  
+//  Hacer la URL dinamica -> /product/1, /product/2
+// . Necesitamos leer la URL -> useParams
+// . Buscar un unico producto de la "base de datos" -> estado/async
 
-  useEffect(() => {
-    getItemData(itemTITLE).then((respuesta) => setProducts(respuesta));
-  }, [itemTITLE]);
+function ItemDetailContainer(){
+  const { itemID } = useParams();
 
-  return (
-    <section>
-      <h2>{products.title}</h2>
-      <hr />
-      <img src={products.img} alt="Imagen" />
-      <p>{products.description}</p>
-      <h4>{products.price}</h4>
-      <ItemCount/>
-    </section>
-  );
+  const [product, setProduct] = useState({});
+
+  useEffect( () => {
+    getItemData(itemID).then( response => setProduct(response))
+  }, [])
+
+  
+  return(    
+   <section>
+    <h2>{product.title}</h2>
+    <hr/>
+    <img src={product.img} alt={product.title}></img>
+    <p>{product.description}</p>
+    <h4>$ {product.price}</h4>
+    <ItemCount/>
+  </section>
+  )
 }
 
-export default ItemDetailContainer;
+export default ItemDetailContainer

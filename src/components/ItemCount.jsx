@@ -1,27 +1,34 @@
-import { useEffect, useState } from 'react';   
+import { useState, useEffect } from "react"
 
 export default function ItemCount(){
-    const [count, setCount] = useState(1);
+  const [count, setCount] = useState(1);
+  
+  useEffect( () =>{
+    console.log("Petición de datos a la base de datos")
+    return () => { console.log("Tarea de desmontaje")}    
+  }, []);
 
-useEffect (()=>{
-    console.log("Peticion de datos al servidor" );
-}, []);
-
-    function handleResta(){
-        setCount(count - 1 );
+ function handleResta() {
+  setCount(prevCount => {
+    if (prevCount > 1) {
+      return prevCount - 1
     }
-    function handleSuma(){
-        setCount(count + 1 );
-    }
+    return prevCount
+  })
+}
 
-    return(
-        <div>
-        <div>
-            <button onClick={handleResta}>-</button>
-            <span>{count}</span>
-            <button onClick={handleSuma}>+</button>
-        </div>
-            <button>Agregar al carrito</button>
-        </div>
-    )
+  function handleSuma(){      
+      setCount(count + 1);
+  }
+
+  return (
+    <div>
+    <div>
+        <button onClick={ handleResta }>-</button>
+        <span>{count}</span>
+        <button onClick={ handleSuma }>+</button>
+    </div>
+    <button>Agregar al carrito</button>
+    </div>
+  )
 }

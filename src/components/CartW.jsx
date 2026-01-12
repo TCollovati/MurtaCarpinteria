@@ -1,3 +1,3 @@
 export default function CartW(){
-  return <span>🛒</span>
+  return <span><big>🛒</big></span>
 }

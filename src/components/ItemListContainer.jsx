@@ -1,31 +1,40 @@
 
-import Item from "./Item.jsx"
-import getData from "../data/mockService.js"
-import {useEffect, useState} from "react"
-import products from "../data/products.js"
+import Item from "./Item"
+import getData, { getCategoryData } from "../data/mockService"
+import './itemlist.css'
+import { useEffect, useState } from "react"
+import { useParams } from "react-router"
 
-export default function ItemListContainer({ Title}) {
+export default function ItemListContainer(props){
+  const [products, setProducts] = useState([]); 
+  
+  const { categoryID } = useParams();
+  console.log(categoryID)
 
-const [products, setProducts] = useState([])
 
-    async function fetchProducts() {
+  useEffect( () =>{
+    if (categoryID) {
+      getCategoryData(categoryID).then( respuesta => setProducts(respuesta))
     }
-    useEffect(() => {
-        getData().then(respuesta=> setProducts(respuesta))
-    },[])
-
-    return (
-        <section>
-            <h3>{Title}</h3>
-            
-            {products.map( 
-                    (item) => <Item
-                    key={item.id}
-                    title={item.title} 
-                    img={item.img}
-                    price={item.price}/>
-                )
-            }
-        </section>
-    )
+    else
+    {
+      getData().then( respuesta => setProducts(respuesta))
+    }
+  }, [categoryID])
+  
+  return (
+    <section>
+        <h2>Hola, bienvenidos a mi tienda {props.greeting} </h2>
+        <div className="itemlist">
+        {
+          products.map( 
+            (item) => <Item 
+              key={item.id}
+              {...item} // spread
+            />
+          )
+        }       
+        </div>
+    </section>      
+  )
 }
