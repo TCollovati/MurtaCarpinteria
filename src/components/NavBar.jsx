@@ -1,7 +1,7 @@
 import { NavLink } from "react-router"
 import logo from "../img/Logo.jpg"
 import CartW from "./CartW.jsx"
-import "./Navbar.css"
+import "./NavBar.css"
 
 export default function NavBar(){
 
