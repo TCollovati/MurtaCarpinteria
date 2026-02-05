@@ -3,12 +3,12 @@ import {addDoc, collection, getFirestore, getDocs, getDoc, doc, query, where } f
 import Item from "../components/Item";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBgj3ElinRFpvV3-QR6C9o-hNWW53ojfhs",
+  apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
   authDomain: "murta-1a301.firebaseapp.com",
   projectId: "murta-1a301",
   storageBucket: "murta-1a301.firebasestorage.app",
   messagingSenderId: "292804444640",
-  appId: "1:292804444640:web:fa0b3f3a36feeaa33e6b85"
+  appId: import.meta.env.VITE_FIREBASE_APIKID,
 };
 
 const app = initializeApp(firebaseConfig);
