@@ -1,13 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
-export default function ItemCount(){
+
+export default function ItemCount(props){
   const [count, setCount] = useState(1);
-  
-  useEffect( () =>{
-    console.log("Petición de datos a la base de datos")
-    return () => { console.log("Tarea de desmontaje")}    
-  }, []);
-
+ 
  function handleResta() {
   setCount(prevCount => {
     if (prevCount > 1) {
@@ -28,7 +24,7 @@ export default function ItemCount(){
         <span>{count}</span>
         <button onClick={ handleSuma }>+</button>
     </div>
-    <button>Agregar al carrito</button>
+    <button onClick={()=>props.onAddToCart(count)} >Agregar al carrito</button>
     </div>
   )
 }

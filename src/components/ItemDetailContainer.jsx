@@ -1,32 +1,42 @@
-import { useParams } from 'react-router'
-import ItemCount from './ItemCount'
-import { useEffect, useState } from 'react';
-import { getItemData } from '../data/mockService';
+import { useParams } from 'react-router-dom';
+import ItemCount from './ItemCount';
+import { useEffect, useState, useContext } from 'react';
+import { getItemData } from '../data/firestore';
+import cartContext from '../context/cartContext';
 
-//  Hacer la URL dinamica -> /product/1, /product/2
-// . Necesitamos leer la URL -> useParams
-// . Buscar un unico producto de la "base de datos" -> estado/async
-
-function ItemDetailContainer(){
+function ItemDetailContainer() {
   const { itemID } = useParams();
+  const [product, setProduct] = useState(null);
+  const { addItemToCart, removeItemFromCart } = useContext(cartContext);
 
-  const [product, setProduct] = useState({});
+  useEffect(() => {
+    getItemData(itemID).then(response => {
+      setProduct(response);
+    });
+  }, [itemID]);
 
-  useEffect( () => {
-    getItemData(itemID).then( response => setProduct(response))
-  }, [])
+  if (!product) {
+    return <h2>Cargando producto...</h2>;
+  }
 
-  
-  return(    
-   <section>
-    <h2>{product.title}</h2>
-    <hr/>
-    <img src={product.img} alt={product.title}></img>
-    <p>{product.description}</p>
-    <h4>$ {product.price}</h4>
-    <ItemCount/>
-  </section>
-  )
+  function onAddToCart(count) {
+    alert(`Agregaste ${count} items al carrito`);
+    addItemToCart(product, count);
+  }
+
+  return (
+    <section>
+      <h2>{product.title}</h2>
+      <hr />
+      <img src={product.img} alt={product.title} />
+      <p>{product.description}</p>
+      <h4>$ {product.price}</h4>
+      <ItemCount onAddToCart={onAddToCart} />
+      <button onClick={() => removeItemFromCart(product.id)}>
+        Eliminar
+      </button>
+    </section>
+  );
 }
 
-export default ItemDetailContainer
+export default ItemDetailContainer;

@@ -11,7 +11,7 @@ export default function NavBar(){
         <img width="350px"src={logo} alt="Logo de Murta" />
       </NavLink>
       <li>
-        <NavLink to="/category/Jueguetes">Jueguetes</NavLink>
+        <NavLink to="/category/Juguetes">Juguetes</NavLink>
       </li>
       <li>
         <NavLink to="/category/Adornos">Adornos</NavLink>
