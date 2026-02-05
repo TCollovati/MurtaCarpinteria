@@ -4,7 +4,6 @@
   padding: 2rem;
 }
 
-/* Card principal */
 .item-detail-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -16,14 +15,13 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 
-/* Imagen */
+
 .item-detail-img {
   width: 100%;
   border-radius: 12px;
   object-fit: cover;
 }
 
-/* Info */
 .item-detail-info {
   display: flex;
   flex-direction: column;
@@ -40,14 +38,13 @@
   line-height: 1.5;
 }
 
-/* Precio */
+
 .item-detail-price {
   font-size: 1.8rem;
   font-weight: 700;
   color: #9b9cff;
 }
 
-/* Botón eliminar (reutiliza estilo carrito) */
 .remove-btn {
   background: transparent;
   border: none;
@@ -61,7 +58,7 @@
   text-decoration: underline;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .item-detail-card {
     grid-template-columns: 1fr;

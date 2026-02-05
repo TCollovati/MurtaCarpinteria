@@ -36,7 +36,7 @@ export default function ItemListContainer(props) {
           products.map(
             (item) => <Item
               key={item.id}
-              {...item} // spread
+              {...item} 
             />
           )
         }

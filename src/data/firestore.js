@@ -53,7 +53,6 @@ export async function createBuyOrder(buyOrderData){
 
 export async function exportProductsToFirestore(products){
   
-  // * for... of -> ok con async
   for(let item of products){
     delete item.id;
     const docRef = await addDoc( collection(db, "products"), item )     
