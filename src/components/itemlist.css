@@ -1,6 +1,22 @@
-itemlist{
+/* Dark Theme Item List Layout */
+.item-list-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.item-list-container h2 {
+  text-align: center;
+  color: #e0e0e0;
+  margin-bottom: 2.5rem;
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.itemlist {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 2rem;
 }

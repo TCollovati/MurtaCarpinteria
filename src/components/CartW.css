@@ -1,0 +1,16 @@
+.cart-w {
+  position: relative;
+  font-size: 1.6rem;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background-color: crimson;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+}

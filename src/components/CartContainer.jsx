@@ -1,95 +1,124 @@
-import { useContext,useState } from "react";
+import { useContext, useState } from "react";
 import cartContext from "../context/cartContext";
 import { createBuyOrder } from "../data/firestore";
+import NavBar from "./NavBar";
+import './CartContainer.css'
 
-export default function CartContainer(){
-    const { cart } = useContext(cartContext);
-    const [formData, setFormData] = useState({
-        username: "",
-        phone: "",
-        email: "",
+export default function CartContainer() {
+  const {
+    cart,
+    countTotalPrice,
+    clearCart,
+    removeItemFromCart
+  } = useContext(cartContext);
+
+  const [formData, setFormData] = useState({
+    username: "",
+    phone: "",
+    email: "",
+  });
+
+  function handleChange(event) {
+    const { value, name } = event.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  }
+
+  async function handleCheckOut(event) {
+    event.preventDefault();
+
+    const buyOrder = {
+      buyer: formData,
+      items: cart,
+      total: countTotalPrice(),
+      date: new Date()
+    };
+
+    await createBuyOrder(buyOrder);
+    clearCart();
+  }
+
+  function handleReset() {
+    setFormData({
+      username: "",
+      phone: "",
+      email: "",
     });
+  }
 
-    console.log(formData);
+  if (cart.length === 0) {
+    return <h2>El carrito está vacío</h2>;
+  }
 
-    function handleCheckOut(){
-        const buyOrder ={
-            buyer: formData,
-            items: cart,
-            total: 999,//Calcular el total
-            date: new Date()
-        }
-        createBuyOrder(buyOrder)
-    }
+  
 
-    function handleSubmit(event) {
-        console.log(event);
-        event.preventDefault();
-    }
+  return (
+    <div className="cart-container">
+  <h2 className="cart-title">Tu carrito de compras</h2>
 
-    function handleChange(event) {
-        console.log(event);
-        const {value, name} = event.target;
-        const newFormData = {...formData};
-        newFormData[name] = value;
-        setFormData(newFormData);
-    }
-
-    function handleReset() {
-        setFormData({
-            username: "",
-            phone: "",
-            email: "",
-        });
-    }
-
-
-    return(
+  <ul className="cart-list">
+    {cart.map(item => (
+      <li key={item.id} className="cart-item">
         <div>
-            <h2>Tu carrito de compras</h2>
-            <div>
-                <ul>
-                { 
-                cart.map( (item) => <li>
-                    {item.title} - ${item.price} - Cantidad: {item.count} <button>Quitar del carrito</button>
-                </li>)
-                }
-                </ul>
-            </div>
-        <div className="formulario-compra">
-            <form onSubmit={handleSubmit}>
-                <label for="username">
-                    Nombre de usuario:
-                    <input 
-                    onChange={handleChange}
-                    name="username" 
-                    type="text" 
-                    placeholder="Nombre Completo"/>             
-                </label>
-                <br />
-                <label for="email">
-                    Email:
-                    <input
-                    onChange={handleChange} 
-                    name="email" 
-                    type="text" 
-                    placeholder="tumail@gmail.com"/>             
-                </label>
-                <br />
-                <label for="phone">
-                    Telefono:
-                    <input
-                    onChange={handleChange} 
-                    name="phone" 
-                    type="text" 
-                    placeholder="+56912341234"/>             
-                </label>
-                <br />
-                <button onClick={handleCheckOut} >Confirmar Compra</button>
+          <strong>{item.title}</strong>
+          <p>${item.price} · Cantidad: {item.count}</p>
+        </div>
 
-                <button onClick={handleReset} type="reset">Limpiar</button>
-            </form>
-        </div>
-        
-        </div>
-    )}
+        <button 
+          className="remove-btn"
+          onClick={() => removeItemFromCart(item.id)}
+        >
+          ✕
+        </button>
+      </li>
+    ))}
+  </ul>
+
+  <h3 className="cart-total">Total: ${countTotalPrice()}</h3>
+
+      <div className="formulario-compra">
+        <form onSubmit={handleCheckOut}>
+          <label htmlFor="username">
+            Nombre:
+            <input
+              value={formData.username}
+              onChange={handleChange}
+              name="username"
+              type="text"
+            />
+          </label>
+
+          <br />
+
+          <label htmlFor="email">
+            Email:
+            <input
+              value={formData.email}
+              onChange={handleChange}
+              name="email"
+              type="email"
+            />
+          </label>
+
+          <br />
+
+          <label htmlFor="phone">
+            Teléfono:
+            <input
+              value={formData.phone}
+              onChange={handleChange}
+              name="phone"
+              type="text"
+            />
+          </label>
+
+          <br />
+
+          <button type="submit">Confirmar Compra</button>
+          <button type="reset" onClick={handleReset}>
+            Limpiar
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}

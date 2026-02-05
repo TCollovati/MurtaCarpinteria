@@ -1,0 +1,14 @@
+.welcome-title {
+  font-size: 2.6rem;        /* 🔥 más grande */
+  font-weight: 800;
+  text-align: center;
+  margin: 2rem 0 3rem;
+  line-height: 1.2;
+
+  /* Color elegante para dark theme */
+  background: linear-gradient(90deg, #9b9cff, #c3c7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  letter-spacing: -0.5px;
+}

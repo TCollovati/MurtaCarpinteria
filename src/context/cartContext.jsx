@@ -1,44 +1,56 @@
 import { createContext, useState } from 'react';
 
-const cartContext = createContext({ cart: []});
- const DefaultContextProvider= cartContext.Provider;
+const cartContext = createContext({ cart: [] });
 
-export function CartProvider({children}){
+export function CartProvider({ children }) {
+  const [cart, setCart] = useState([]);
 
-    const [cart, setCart] = useState([]);
+  function addItemToCart(item, count) {
+    const newCart = structuredClone(cart);
+    const index = newCart.findIndex(prod => prod.id === item.id);
 
-    function addItemToCart(item, count){
-        const newCart = structuredClone(cart);
-        newCart.push({ ...item, count})
-        setCart(newCart);
-        //Condicional if para no duplicar el articulo que ya existe, solo que sume
+    if (index !== -1) {
+      newCart[index].count += count;
+    } else {
+      newCart.push({ ...item, count });
     }
 
-    function removeItemFromCart(idRemove){
-        const newCart = cart.filter(item => item.id !== idRemove)
-        setCart(newCart);
-    }
+    setCart(newCart);
+  }
 
-    function countItemInCart (){
-        let total=0;
-        cart.forEach((item) => total+= item.count)
-        return total;
-    }
+  function removeItemFromCart(idRemove) {
+    setCart(cart.filter(item => item.id !== idRemove));
+  }
 
-    function clearCart(){
+  function countItemInCart() {
+    return cart.reduce((total, item) => total + item.count, 0);
+  }
 
-    }
+  function clearCart() {
+    setCart([]);
+  }
 
-    function countTotalPrice(){
+  function countTotalPrice() {
+    return cart.reduce(
+      (total, item) => total + item.price * item.count,
+      0
+    );
+  }
 
-    }
-    
-
-    return (
-        <DefaultContextProvider value={{cart: cart, addItemToCart, removeItemFromCart, countItemInCart}}>
-        {children}
-        </DefaultContextProvider>
-    )
+  return (
+    <cartContext.Provider
+      value={{
+        cart,
+        addItemToCart,
+        removeItemFromCart,
+        countItemInCart,
+        clearCart,
+        countTotalPrice
+      }}
+    >
+      {children}
+    </cartContext.Provider>
+  );
 }
 
 export default cartContext;

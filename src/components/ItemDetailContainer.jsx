@@ -3,6 +3,8 @@ import ItemCount from './ItemCount';
 import { useEffect, useState, useContext } from 'react';
 import { getItemData } from '../data/firestore';
 import cartContext from '../context/cartContext';
+import './ItemDetailContainer.css'
+import NavBar from './NavBar';
 
 function ItemDetailContainer() {
   const { itemID } = useParams();
@@ -25,17 +27,32 @@ function ItemDetailContainer() {
   }
 
   return (
-    <section>
-      <h2>{product.title}</h2>
-      <hr />
-      <img src={product.img} alt={product.title} />
-      <p>{product.description}</p>
-      <h4>$ {product.price}</h4>
+    <section className="item-detail">
+  <div className="item-detail-card">
+    <img 
+      className="item-detail-img"
+      src={product.img} 
+      alt={product.title} 
+    />
+
+    <div className="item-detail-info">
+      <h2 className="item-detail-title">{product.title}</h2>
+      <p className="item-detail-description">{product.description}</p>
+
+      <h4 className="item-detail-price">$ {product.price}</h4>
+
       <ItemCount onAddToCart={onAddToCart} />
-      <button onClick={() => removeItemFromCart(product.id)}>
+
+      <button
+        className="remove-btn"
+        onClick={() => removeItemFromCart(product.id)}
+      >
         Eliminar
       </button>
-    </section>
+    </div>
+  </div>
+</section>
+
   );
 }
 
